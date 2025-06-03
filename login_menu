@@ -1,0 +1,35 @@
+// Relationship between Ship Type and Energy Efficiency
+// Calculator
+
+// Ship Type: Categorizes ships into four main types: Fishing Trawler, Oil Service Boat, Surfer Boat, and Tanker Ship.
+// measures by gross tonnage (GT)?
+
+import java.util.Scanner;
+
+public class test {
+    public static void shipType(String ship_number) {
+        if (ship_number.equals("001")) {
+            System.out.println("Welcome Oil Service Boat NG001");
+        } else if (ship_number.equals("002")) {
+            System.out.println("Welcome Fishing Trawler NG002");
+        } else if (ship_number.equals("005")) {
+            System.out.println("Welcome Tanker Ship NG005");
+        } else if (ship_number.equals("004")) {
+            System.out.println("Welcome Surfer Boat NG004");
+        } else {
+            System.out.println("Invalid Ship ID");
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String ship_number; // declaring ship_number so that it can be in the do-while loop condition
+        do {
+            System.out.print("Enter Ship ID: ");   //must start with NG e.g. NG001
+            ship_number = in.next();
+            shipType(ship_number);
+        }
+        while(!(ship_number.equals("001") ||  ship_number.equals("002") || ship_number.equals("005") || ship_number.equals("004")));
+    }
+}
