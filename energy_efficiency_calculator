@@ -1,0 +1,63 @@
+// 1) environmental efficiency (how much CO2 is emitted per kilometer)
+// CO2 emitted per kilometer = CO2 emissions (kg) / distance (km)
+// Assume only type of fuel used is Diesel
+import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class environmental_efficiency {
+    public static double[] carbon_distance() {  // this method returns an Array of Doubles : carbon_emissions, distance_travelled
+        Scanner in = new Scanner(System.in);
+        double carbon_emissions = 0.0;  // declare carbon_emissions
+        boolean valid = false;
+        // while True loop to repeat the block of code until valid input is entered
+        while (!valid) { // exception handling in case user enters invalid input
+            System.out.print("Enter Carbon Emissions in Kilograms: ");
+            try {  // exception handling in case user enters invalid input
+                carbon_emissions = Double.parseDouble(in.nextLine()); // converts carbon_emissions to Double
+                System.out.printf("Carbon Emissions in Kilograms: %.2f kg\n", carbon_emissions);
+                valid = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            }
+        }
+        double distance_travelled = 0.0;
+        boolean valid_1 = false;
+        while (!valid_1) {
+            System.out.println("Enter Total Distance Travelled in Kilometers: ");
+            try{
+                distance_travelled = Double.parseDouble(in.nextLine());
+                System.out.printf("Distance Travelled: %.2f km\n", distance_travelled); // distance_travelled is an argument, not concatenation
+                valid_1 = true; // exit loop
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input");
+            }
+        }
+        return new double[]{carbon_emissions, distance_travelled};
+    }
+    public static double envi_effi_calc(double carbon_emissions, double distance_travelled){
+        double envi_effi = carbon_emissions / distance_travelled;
+        System.out.printf("Energy Efficiency: %.2f kg/km\n", envi_effi);
+        return  envi_effi;
+    }
+    // calling the methods
+    public static void print_in_txt_file(double carbon_emissions, double distance_travelled, double envi_effi) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("NG001.txt"));
+            writer.write(String.format("Carbon Emissions: %.2f kg/km\n", carbon_emissions));
+            writer.write(String.format("Total Distance Travelled: %.2f kg/km\n", distance_travelled));
+            writer.write(String.format("Energy Efficiency: %.2f kg/km\n", envi_effi));
+            writer.write("--------------------------------------------------------------");
+            writer.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public static void main(String[] args) {
+        double[] values = carbon_distance();  // values = [carbon_emission, distance_travelled]
+        double energy_efficiency = envi_effi_calc(values[0], values[1]);  // extracting element 0 (carbon_emission) and element 1 (distance_travelled)
+        print_in_txt_file(values[0], values[1], energy_efficiency);
+    }
+}
