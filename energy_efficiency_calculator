@@ -1,10 +1,12 @@
 // 1) environmental efficiency (how much CO2 is emitted per kilometer)
 // CO2 emitted per kilometer = CO2 emissions (kg) / distance (km)
 // Assume only type of fuel used is Diesel
+
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class environmental_efficiency {
     public static double[] carbon_distance() {  // this method returns an Array of Doubles : carbon_emissions, distance_travelled
@@ -44,7 +46,9 @@ public class environmental_efficiency {
     // calling the methods
     public static void print_in_txt_file(double carbon_emissions, double distance_travelled, double envi_effi) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("NG001.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("NG001.txt", true));  // append to .txt file
+            LocalDate current_date = LocalDate.now();
+            writer.write("\nDate: " + current_date + "\n");
             writer.write(String.format("Carbon Emissions: %.2f kg/km\n", carbon_emissions));
             writer.write(String.format("Total Distance Travelled: %.2f kg/km\n", distance_travelled));
             writer.write(String.format("Energy Efficiency: %.2f kg/km\n", envi_effi));
@@ -59,5 +63,6 @@ public class environmental_efficiency {
         double[] values = carbon_distance();  // values = [carbon_emission, distance_travelled]
         double energy_efficiency = envi_effi_calc(values[0], values[1]);  // extracting element 0 (carbon_emission) and element 1 (distance_travelled)
         print_in_txt_file(values[0], values[1], energy_efficiency);
+
     }
 }
