@@ -1,0 +1,164 @@
+//AVERAGE CARBON EMISSIONS,DISTANCE TRAVELLED AND FUEL CONSUMPTION CALCULATOR
+//PROVIDES WARNINGS IF CARBON EMISSIONS IS OVER 10 000kg
+//CREATES A TXT FILE 
+
+
+import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+
+
+public class AVERAGESHIP {
+
+    public static void shipType(String ship_number) {    //print ship type based on shipid
+        if (ship_number.equals("001")) {
+            System.out.println("Welcome Oil Service Boat NG001");
+        } else if (ship_number.equals("002")) {
+            System.out.println("Welcome Fishing Trawler NG002");
+        } else if (ship_number.equals("004")) {
+            System.out.println("Welcome Surfer Boat NG004");
+        } else if (ship_number.equals("005")) {
+            System.out.println("Welcome Tanker Ship NG005");
+        } else {
+            System.out.println("Invalid Ship ID");
+        }
+    }
+
+    public static void main(String[] args) {  //each array holds the shipid,distance and fuel consumption of each ship
+        double[] CO2shipid1 = {
+                10625.76, 12779.73, 5353.01, 6506.52, 11617.03, 6753.42,
+                8498.16, 3509.56, 9423.97, 6416.66, 11930.11, 4671.66
+        };
+        double[] Distance1 = {
+                132.26, 128.52, 67.3, 71.68, 93.83, 85.93,
+                94.81, 44.81, 116.5, 99.73, 149.9, 102.61
+        };
+        double[] Fuel1 = {
+                3779.77, 4461.44, 2393.51, 3164.5, 3855.93, 4234.5,
+                4012.43, 1376.83, 3611.56, 2551.9, 4014.14, 2631.66
+        };
+
+        double[] CO2shipid2 = {
+                5766.12, 10052.39, 3649.81, 16991.82, 5427.9, 9542.8,
+                10355.16, 6537.61, 15355.6, 9225.45, 12442.34, 14184.19
+        };
+        double[] Distance2 = {
+                92.03, 141.91, 93.0, 183.25, 72.25, 108.15,
+                160.43, 121.07, 193.59, 174.62, 154.6, 192.0
+        };
+        double[] Fuel2 = {
+                2721.06, 3963.12, 1823.31, 4891.25, 1873.31, 2780.05,
+                3626.57, 3187.61, 5565.57, 4225.46, 4594.25, 5146.91
+        };
+
+        double[] CO2shipid4 = {
+                4498.8, 1960.81, 3285.93, 1720.02, 7648.96, 4170.02,
+                8143.0, 5954.64, 6454.7, 2612.85, 5617.77, 5019.8
+        };
+        double[] Distance4 = {
+                86.9, 58.95, 64.67, 32.85, 192.04, 111.84,
+                165.4, 162.48, 183.71, 90.25, 181.02, 163.81
+        };
+        double[] Fuel4 = {
+                1698.32, 734.45, 1196.4, 670.74, 3037.36, 1440.01,
+                2082.64, 2082.27, 2267.12, 977.22, 1983.66, 1908.54
+        };
+
+        double[] CO2shipid5 = {
+                42180.94, 46753.73, 17358.94, 53142.22, 6230.95, 56400.31,
+                35971.47, 7692.62, 15446.17, 18859.62, 51377.83, 24081.26
+        };
+        double[] Distance5 = {
+                494.4, 305.9, 363.22, 77.01, 436.73, 77.51,
+                84.01, 108.94, 199.18, 441.93, 172.3, 172.03
+        };
+        double[] Fuel5 = {
+                18375.56, 17358.94, 17778.61, 2362.24, 20365.74, 2841.99,
+                5841.66, 5792.23, 10115.16, 17249.33, 12489.38, 8249.38
+        };
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Ship ID (1,2,4,5): ");
+        int shipId = scanner.nextInt();
+
+        double[] selectedCO2;
+        double[] selectedDistance;
+        double[] selectedFuel;
+
+        if (shipId == 1) {       //declaring each shipid to corresponding value
+            shipType("001");
+            selectedCO2 = CO2shipid1;
+            selectedDistance = Distance1;
+            selectedFuel = Fuel1;
+        } else if (shipId == 2) {
+            shipType("002");
+            selectedCO2 = CO2shipid2;
+            selectedDistance = Distance2;
+            selectedFuel = Fuel2;
+        } else if (shipId == 4) {
+            shipType("004");
+            selectedCO2 = CO2shipid4;
+            selectedDistance = Distance4;
+            selectedFuel = Fuel4;
+        } else if (shipId == 5) {
+            shipType("005");
+            selectedCO2 = CO2shipid5;
+            selectedDistance = Distance5;
+            selectedFuel = Fuel5;
+        } else {            //if user inputs 3 or anything that is not 1,2,3,5, output a error message
+            System.out.println("Invalid Ship ID. Please enter 1, 2, 4, or 5."); //user inputs incorrect shipid
+            scanner.close();
+            return;
+        }
+
+        double sumCO2 = 0, sumDistance = 0, sumFuel = 0;
+        for (int i = 0; i < selectedCO2.length; i++) {   //for loops until 12 which is the length of each segment
+            sumCO2 += selectedCO2[i];
+            sumDistance += selectedDistance[i];
+            sumFuel += selectedFuel[i];
+        }
+
+        double avgCO2 = sumCO2 / selectedCO2.length;        //formula to calculate average, takes the sum/by the length which is 12
+        double avgDistance = sumDistance / selectedDistance.length;
+        double avgFuel = sumFuel / selectedFuel.length;
+
+        System.out.printf("Average CO2 Emissions for Ship ID %d: %.2f kg%n", shipId, avgCO2);     //output rounded off to 2 decibel places
+        System.out.printf("Average Distance for Ship ID %d: %.2f km%n", shipId, avgDistance);
+        System.out.printf("Average Fuel Consumption for Ship ID %d: %.2f litres%n", shipId, avgFuel);
+        int i = 0;
+        while (i < selectedCO2.length) {         //if any value in CO2 emissions is higher than 10000kg it will output a warning
+            if (selectedCO2[i] > 10000) {
+                System.out.printf("!!Warning!!  Trip %d produced high CO₂ (%.2f kg)\n", i + 1, selectedCO2[i]);
+            }
+            i++;
+        }
+        //  file writing
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter( "averageship.txt", true)); // append mode
+            LocalDate currentDate = LocalDate.now();    //detects the current date
+
+            writer.write("Date: " + currentDate.toString()+"\n");
+            writer.write(("Ship ID: " + shipId + "\n"));
+            writer.write(String.format("Average CO2 Emissions: %.2f kg\n", avgCO2));
+            writer.write(String.format("Average Distance: %.2f km\n", avgDistance));
+            writer.write(String.format("Average Fuel Consumption: %.2f litres\n", avgFuel));
+
+            // Write warning entries if CO2 exceeds 10000 kg
+            for (int j = 0; j < selectedCO2.length; j++) {
+                if (selectedCO2[j] > 10000) {
+                    writer.write(String.format("!!Warning!!  Trip %d produced high CO₂ (%.2f kg)\n", j + 1, selectedCO2[j]));
+                }
+            }
+
+            writer.write("--------------------------------------------------------------\n");
+            writer.close();
+            System.out.println(" Report saved to ship_report.txt");
+        } catch (IOException e) {
+            System.out.println(" Error writing to file.");  //error message
+            e.printStackTrace();
+        }
+
+    }
+}
