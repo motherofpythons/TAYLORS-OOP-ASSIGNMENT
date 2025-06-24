@@ -1,0 +1,82 @@
+import com.print.environmental_efficiency;
+import com.login.test;   // importing the class from a different file
+import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+
+public class fuel_efficiency {
+    // getting fuel used and carbon emissions inputs
+    public static double [] fuel_carbon() {
+        Scanner in = new Scanner(System.in);
+        double fuel_used = 0.0;
+        boolean valid = false;
+        while(!valid){
+            System.out.print("Enter Fuel Used in Litres: ");
+            try{
+                fuel_used = in.nextDouble();
+                System.out.printf("Fuel Used in Litres: %.2f litres\n", fuel_used);
+                valid = true;
+            }catch (NumberFormatException e){
+                System.out.println("Invalid input.");
+            }
+        }
+        double carbon_emissions = 0.0;
+        boolean valid_1 = false;
+        while (!valid_1) { // exception handling in case user enters invalid input
+            System.out.print("Enter Carbon Emissions in Kilograms: ");
+            try {  // exception handling in case user enters invalid input
+                carbon_emissions = in.nextDouble();
+                System.out.printf("Carbon Emissions in Kilograms: %.2f kg\n", carbon_emissions);
+                valid_1 = true;
+            } catch (NumberFormatException e) {    // handles the exception where the input is a,b,c instead of 123
+                System.out.println("Invalid input");
+            }
+        }
+        return new double[] {fuel_used, carbon_emissions};
+    }
+    // calculating fuel efficiency
+    public static double fuel_efficiency_calc(double carbon_emissions, double fuel_used){
+        double fuel_effi = carbon_emissions/ fuel_used;
+        System.out.printf("Fuel Efficiency: %.2f kg/litre\n", fuel_effi);
+        return fuel_effi;
+    }
+    // writing into txt file to generate reports
+    public static void print_in_txt_file(double carbon_emissions, double fuel_used, double fuel_effi, String ship_number) {
+        try {
+            String filename = "NG" + ship_number + ".txt";   // storing entry records into their respective ship number files
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));  // append to .txt file
+            LocalDate current_date = LocalDate.now();  // to make individual records dated and specific
+            writer.write("\n                    [FUEL EFFICIENCY]");
+            writer.write("\nDate: " + current_date + "\n");
+            writer.write(String.format("Carbon Emissions: %.2f kg\n", carbon_emissions));
+            writer.write(String.format("Total Fuel Used: %.2f litres\n", fuel_used));
+            writer.write(String.format("Fuel Efficiency: %.2f kg/litre\n", fuel_effi));
+            writer.write("--------------------------------------------------------------");
+            writer.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    // calling all methods here
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String ship_number; // declaring ship_number so that it can be in the do-while loop condition
+        do {
+            System.out.print("Enter Ship ID: ");   //must start with NG e.g. NG001
+            ship_number = in.next();
+        }
+        while(!(ship_number.equals("001") ||  ship_number.equals("002") || ship_number.equals("005") || ship_number.equals("004")));
+        test.shipType(ship_number);   // test.java is static so you can call it directly
+
+        double [] values = fuel_carbon();    // carbon_emissions and fuel_used
+        double fuel_efficiency = fuel_efficiency_calc(values[0], values[1]);
+
+        print_in_txt_file(values[0], values[1], fuel_efficiency, ship_number);
+
+
+    }
+}
