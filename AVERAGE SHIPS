@@ -136,7 +136,8 @@ public class AVERAGESHIP {
         }
         //  file writing
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter( "averageship.txt", true)); // append mode
+            String filename="NG"+ shipId + ".txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter( filename,true)); // append mode
             LocalDate currentDate = LocalDate.now();    //detects the current date
 
             writer.write("Date: " + currentDate.toString()+"\n");
@@ -154,7 +155,7 @@ public class AVERAGESHIP {
 
             writer.write("--------------------------------------------------------------\n");
             writer.close();
-            System.out.println(" Report saved to ship_report.txt");
+            System.out.println(" Report saved");
         } catch (IOException e) {
             System.out.println(" Error writing to file.");  //error message
             e.printStackTrace();
