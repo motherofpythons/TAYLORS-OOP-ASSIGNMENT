@@ -1,5 +1,13 @@
-import com.print.environmental_efficiency;
+// 3) what fuel type is more environmentally friendly?
+//    - CO2 emissions per liter of fuel (1 + 2)
+// formula:
+// CO2 emissions per liter of fuel = CO2 emissions (kg) / fuel used (litres)
+
+
+
 import com.login.test;   // importing the class from a different file
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -18,7 +26,7 @@ public class fuel_efficiency {
                 fuel_used = in.nextDouble();
                 System.out.printf("Fuel Used in Litres: %.2f litres\n", fuel_used);
                 valid = true;
-            }catch (NumberFormatException e){
+            }catch (InputMismatchException e){
                 System.out.println("Invalid input.");
             }
         }
@@ -30,11 +38,12 @@ public class fuel_efficiency {
                 carbon_emissions = in.nextDouble();
                 System.out.printf("Carbon Emissions in Kilograms: %.2f kg\n", carbon_emissions);
                 valid_1 = true;
-            } catch (NumberFormatException e) {    // handles the exception where the input is a,b,c instead of 123
+            } catch (InputMismatchException e) {    // handles the exception where the input is a,b,c instead of 123
                 System.out.println("Invalid input");
+                in.next(); // takes the invalid input to avoid an infinite loop
             }
         }
-        return new double[] {fuel_used, carbon_emissions};
+        return new double[] {carbon_emissions, fuel_used};
     }
     // calculating fuel efficiency
     public static double fuel_efficiency_calc(double carbon_emissions, double fuel_used){
@@ -43,16 +52,19 @@ public class fuel_efficiency {
         return fuel_effi;
     }
     // writing into txt file to generate reports
-    public static void print_in_txt_file(double carbon_emissions, double fuel_used, double fuel_effi, String ship_number) {
+    public static void print_in_txt_file(double carbon_emissions, double fuel_used, double fuel_effi, String ship_number, boolean warning) {
         try {
             String filename = "NG" + ship_number + ".txt";   // storing entry records into their respective ship number files
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));  // append to .txt file
             LocalDate current_date = LocalDate.now();  // to make individual records dated and specific
-            writer.write("\n                    [FUEL EFFICIENCY]");
+            writer.write("\n\t\t\t\t\t[FUEL EFFICIENCY]");
             writer.write("\nDate: " + current_date + "\n");
             writer.write(String.format("Carbon Emissions: %.2f kg\n", carbon_emissions));
             writer.write(String.format("Total Fuel Used: %.2f litres\n", fuel_used));
             writer.write(String.format("Fuel Efficiency: %.2f kg/litre\n", fuel_effi));
+            if (warning){
+                writer.write("\n!! Dangerous levels of fuel used. !!\n");
+            }
             writer.write("--------------------------------------------------------------");
             writer.close();
         }catch (IOException e) {
@@ -60,22 +72,44 @@ public class fuel_efficiency {
         }
 
     }
+    // returns true or false
+    public static boolean warning_fuel_used(double fuel_used){
+        // if the fuel used is greater or equal to the highest record of fuel used
+        if (fuel_used >= 2678.94){
+            System.out.println("\nFuel used is at dangerous levels. Please ensure the following statements are checked to" +
+                    "make sure fuel efficiency is optimized to protect the marine environment.");
+            System.out.println("\t1. Reduce unnecessary weight from the boat.");
+            System.out.println("\t2. Do not leave the engine running idle.");
+            System.out.println("\t3. Install a fuel flow meter to keep track of fuel efficiency in real time.");
+            System.out.println("\t4. Tune your engine for better mileage.");
+            System.out.println("\t5. Keep the bottom of the boat clean and barnacle-free");
+            System.out.println("Please call the Department of Marine Environment at 019-9999999 for further information.");
+            return true;
+        }else{
+            System.out.println("Keep up the good work!");
+            return false;
+        }
+    }
 
     // calling all methods here
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String ship_number; // declaring ship_number so that it can be in the do-while loop condition
         do {
-            System.out.print("Enter Ship ID: ");   //must start with NG e.g. NG001
+            System.out.print("Enter Ship ID (e.g. NG00X): ");   //must start with NG e.g. NG001
             ship_number = in.next();
         }
         while(!(ship_number.equals("001") ||  ship_number.equals("002") || ship_number.equals("005") || ship_number.equals("004")));
         test.shipType(ship_number);   // test.java is static so you can call it directly
 
         double [] values = fuel_carbon();    // carbon_emissions and fuel_used
+        // execute calculator function and print results
         double fuel_efficiency = fuel_efficiency_calc(values[0], values[1]);
-
-        print_in_txt_file(values[0], values[1], fuel_efficiency, ship_number);
+        // print warning if fuel_used is too high
+        // warning is derived from the function with the parameter: fuel_used
+        boolean warning = warning_fuel_used(values[1]);  // if it returns a boolean value
+        // write it into a txt file
+        print_in_txt_file(values[0], values[1], fuel_efficiency, ship_number, warning);
 
 
     }
