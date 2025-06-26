@@ -11,29 +11,43 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class main_menu {
-    public static void main (String[] args){
+    public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
+        boolean exit = false;
         // ask user which function they want to use
-        System.out.println("Welcome to the [We Care About the Sea - SDG13 application].");
-        System.out.println("\t1. Climate Change Awareness");
-        System.out.println("\t2. Average Carbon Emissions, Distance Travelled, and Fuel Consumption");
-        System.out.println("\t3. Environmental Efficiency");
-        System.out.println("\t4. Fuel Efficiency\n");
-        System.out.print("Please select a feature you want to use (1-4): ");
-        int selected_feature = in.nextInt();
-        switch (selected_feature){
-            case 1:
-                Climate_Change_Awareness.main(null);
-                break;
-            case 2:
-                Average_Ships.main(null);
-                break;
-            case 3:
-                Environmental_Efficiency.main(null);
-                break;
-            case 4:
-                Fuel_Efficiency.main(null);
+        do {
+            System.out.println("Welcome to the [We Care About the Sea - SDG13 application].");
+            System.out.println("\t1. Climate Change Awareness");
+            System.out.println("\t2. Average Carbon Emissions, Distance Travelled, and Fuel Consumption");
+            System.out.println("\t3. Environmental Efficiency");
+            System.out.println("\t4. Fuel Efficiency");
+            System.out.println("\t5. Exit\n");
+            System.out.print("Please select a feature you want to use (1-5): ");
+            int selected_feature = in.nextInt();
+            switch (selected_feature) {
+                case 1:
+                    Climate_Change_Awareness.main(null);
+                    break;
+                case 2:
+                    Average_Ships.main(null);
+                    break;
+                case 3:
+                    Environmental_Efficiency.main(null);
+                    break;
+                case 4:
+                    Fuel_Efficiency.main(null);
+                    break;
+                case 5:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid. Please select a valid feature (1-5).");
+            }
+
+        }
+        while (!exit);
+        in.close();  // closing the scanner
+
         }
 
     }
-}
