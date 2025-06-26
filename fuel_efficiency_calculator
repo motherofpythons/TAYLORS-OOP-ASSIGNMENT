@@ -1,12 +1,10 @@
-// 3) what fuel type is more environmentally friendly?
+
 //    - CO2 emissions per liter of fuel (1 + 2)
 // formula:
 // CO2 emissions per liter of fuel = CO2 emissions (kg) / fuel used (litres)
 
-
-
+package com.fuel_efficiency;
 import com.login.test;   // importing the class from a different file
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.BufferedWriter;
@@ -14,7 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class fuel_efficiency {
+public class Fuel_Efficiency {
     // getting fuel used and carbon emissions inputs
     public static double [] fuel_carbon() {
         Scanner in = new Scanner(System.in);
