@@ -1,10 +1,11 @@
+package com.climate_change_awareness;
 import java.util.Scanner; // Import Scanner class to read input from the user
 import java.io.BufferedWriter; // Import BufferedWriter to write to files
 import java.io.FileWriter; // Import FileWriter to open files for writing
 import java.io.IOException; // Import IOException to handle file-related errors
 import java.time.LocalDate; // Import LocalDate to get the current date
 
-public class ClimateChangeAwareness {
+public class Climate_Change_Awareness {
 
     // Welcome message: Prints a friendly greeting and intro to the program
     public static void welcomeMessage() {
