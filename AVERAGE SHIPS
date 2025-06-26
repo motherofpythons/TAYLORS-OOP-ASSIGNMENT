@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 
-public class AVERAGESHIP {
+public class Average_Ships {
 
     public static void shipType(String ship_number) {    //print ship type based on shipid
         if (ship_number.equals("001")) {
