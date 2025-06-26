@@ -85,10 +85,10 @@ public class Environmental_Efficiency {
         Scanner in = new Scanner(System.in);
         String ship_number; // declaring ship_number so that it can be in the do-while loop condition
         do {
-            System.out.print("Enter Ship ID (e.g. NG00X): ");   //must start with NG e.g. NG001
+            System.out.print("Enter Ship ID: ");   //must start with NG e.g. NG001
             ship_number = in.next();
         }
-        while(!(ship_number.equals("001") ||  ship_number.equals("002") || ship_number.equals("005") || ship_number.equals("004")));
+        while(!(ship_number.equals("1") ||  ship_number.equals("2") || ship_number.equals("5") || ship_number.equals("4")));
         test.shipType(ship_number);   // test.java is static so you can call it directly
 
         double[] values = carbon_distance();  // values = [carbon_emission, distance_travelled]
