@@ -139,7 +139,7 @@ public class Climate_Change_Awareness {
 
         trackProgress(count); // After the loop ends, call trackProgress to display how many topics the user learned
         System.out.println("Exiting the program..."); // Inform the user that the program is exiting
-        in.close(); // Close the Scanner object to prevent resource leakage
+    
     }
 
     // Track user's progress: This function shows the number of topics the user has explored during the session
