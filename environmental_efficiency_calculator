@@ -1,7 +1,7 @@
 // 1) environmental efficiency (how much CO2 is emitted per kilometer)
 // CO2 emitted per kilometer = CO2 emissions (kg) / distance (km)
 // Assume only type of fuel used is Diesel
-package com.print;
+package com.environmental_efficiency;
 import com.login.test;   // importing the class from a different file
 import java.util.Scanner;
 import java.io.BufferedWriter;
@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class environmental_efficiency {
+public class Environmental_Efficiency {
     public static double[] carbon_distance() {  // this method returns an Array of Doubles : carbon_emissions, distance_travelled
         Scanner in = new Scanner(System.in);
         double carbon_emissions = 0.0;  // declare carbon_emissions
