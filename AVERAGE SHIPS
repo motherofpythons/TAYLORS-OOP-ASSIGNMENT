@@ -2,7 +2,7 @@
 //PROVIDES WARNINGS IF CARBON EMISSIONS IS OVER 10 000kg
 //CREATES A TXT FILE
 
-
+package com.average_ships;
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
